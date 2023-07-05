@@ -19,7 +19,7 @@ const Salt = bcrypt.genSaltSync(10)
 
 app.use(cors({
   credentials:true,
-  origin:process.env.CLIENT_URL
+  origin:"http://127.0.0.1:5173"
 }))
 app.use("/uploads",express.static(__dirname + "/uploads"))
 app.use(cookieParser())
