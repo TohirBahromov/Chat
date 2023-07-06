@@ -123,6 +123,9 @@ export default function Chat() {
   delete deleteOurUser[id]
 
   const messagesWithoutDupes = uniqBy(messages,"_id")
+  useEffect(()=>{
+    console.log(messages);
+  },[messages])
 
   return (
     <>
