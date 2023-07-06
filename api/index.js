@@ -21,14 +21,18 @@ app.use(cors({
   credentials:true,
   origin:"http://chatagramm.netlify.app"
 }))
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 app.use("/uploads",express.static(__dirname + "/uploads"))
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://chatagramm.netlify.app');
-  next();
-});
 
 async function getUserDataFromRequest(req){
   return new Promise((resolve,reject) => {
