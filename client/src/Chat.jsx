@@ -13,7 +13,7 @@ export default function Chat() {
   const [newMsgText, setNewMsgText] = useState("")
   const [messages,setMessages] = useState([])
   const [showMenu, setShowMenu] = useState(false)
-  const {id,username,setId,setUsername} = useContext(UserContext)
+  const {id,username,setId,setUsername,uzbek} = useContext(UserContext)
   const bottomMessages = useRef()
 
   useEffect(()=>{
@@ -134,9 +134,9 @@ export default function Chat() {
           </div>
           <div className="flex-grow overflow-x-scroll scrollbar">
             <div className="online-users mb-4 py-3 border-b-2 border-t-2">
-              <div className="px-2 font-bold mb-4 text-green-500 border-b pb-2 mx-4">Online users</div>
+              <div className="px-2 font-bold mb-4 text-green-500 border-b pb-2 mx-4">{uzbek ? "Onlayn foydalanuvchilar" : "Online users"}</div>
               {Object.keys(deleteOurUser).length === 0 && (
-                <div className="text-gray-400 p-5 text-center">no online users</div>
+                <div className="text-gray-400 p-5 text-center">{uzbek ? "onlayn foydalanuvchilar mavjud emas" : "no online users"}</div>
               )}
               {Object.keys(deleteOurUser).map(userId => (
                 <div key={userId} onClick={()=> {
@@ -157,7 +157,7 @@ export default function Chat() {
               ))}
             </div>
             <div className="offline-users mb-4 py-3 border-b-2 border-t-2">
-              <div className="px-2 font-bold mb-4 text-gray-500 border-b pb-2 mx-4">Offline users</div>
+              <div className="px-2 font-bold mb-4 text-gray-500 border-b pb-2 mx-4">{uzbek ? "Oflayn foydalanuvchilar" : "Offline users"}</div>
               {Object.keys(offlineUsers).map(userId => (
                 <div key={userId} onClick={()=> {
                   setSelectedUserId(userId),
@@ -210,7 +210,7 @@ export default function Chat() {
               {!selectedUserId &&
               (
                 <div className="h-full flex items-center justify-center">
-                  <div className="text-gray-400">select a user</div>
+                  <div className="text-gray-400">{uzbek ? "foydalanuvchi tanlang" : "select a user"}</div>
                 </div>
               )}
               {!!selectedUserId && (

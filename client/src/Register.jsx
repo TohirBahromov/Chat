@@ -8,7 +8,7 @@ export default function Register() {
   const [registerError,setRegisterError] = useState("")
   const [loginError, setLoginError] = useState("")
   const [isLogOrReg, setIsLogOrReg] = useState("register")
-  const {setUsername: setLoggedInUsername,setId} = useContext(UserContext);
+  const {setUsername: setLoggedInUsername,setId, setUzbek, uzbek} = useContext(UserContext);
 
   function ChangePage(){
     setIsLogOrReg(isLogOrReg === "register" ? "login" : "register")
@@ -36,9 +36,9 @@ export default function Register() {
       <div className='bg-blue-50 h-screen flex items-center relative'>
         <div className="choose-language absolute top-8 right-8">
           <fieldset>
-            <select>
-              <option value="eng">English</option>
-              <option value="uzb">Uzbek</option>
+            <select className='p-2'>
+              <option onClick={() => setUzbek(false)} value="eng">English</option>
+              <option onClick={() => setUzbek(true)} value="uzb">Uzbek</option>
             </select>
           </fieldset>
         </div>
@@ -49,15 +49,15 @@ export default function Register() {
           <div className='text-center mt-2'>
             {isLogOrReg === "register" && (
               <div>
-                Already a member? 
-                <button className='ml-1 text-blue-600' onClick={ChangePage}>Login here</button>
+                {uzbek ? "Saytga a'zomisiz?" : "Already a member?"} 
+                <button className='ml-1 text-blue-600' onClick={ChangePage}>{uzbek ? "Akkauntingizga kiring" : "Login here"}</button>
                 <h3 className='text-red-500'>{registerError}</h3>
               </div>
             )}
             {isLogOrReg === "login" && (
               <div>
-                Don't have an account? 
-                <button className='ml-1 text-blue-600' onClick={ChangePage}>Sign in</button>
+                {uzbek ? "Akkauntingiz yo'qmi?" : "Don't have an account?"} 
+                <button className='ml-1 text-blue-600' onClick={ChangePage}>{uzbek ? "Ro'yxatdan o'ting" : "Sign in"}</button>
                 <h3 className='text-red-500'>{loginError}</h3>
               </div>
             )}
