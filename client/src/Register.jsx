@@ -37,8 +37,8 @@ export default function Register() {
         <div className="choose-language absolute top-8 right-8">
           <fieldset>
             <select className='p-2'>
-              <option onClick={() => setUzbek(false)} value="eng">English</option>
-              <option onClick={() => setUzbek(true)} value="uzb">Uzbek</option>
+              <option onChange={() => setUzbek(false)} value="eng">English</option>
+              <option onChange={() => setUzbek(true)} value="uzb">Uzbek</option>
             </select>
           </fieldset>
         </div>
