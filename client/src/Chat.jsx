@@ -107,7 +107,7 @@ export default function Chat() {
       });
       setOfflineUsers(offlinePeople);
     });
-  },[onlinePeople]);
+  },[onlineUsers]);
 
   useEffect(()=>{ 
     if(selectedUserId){
