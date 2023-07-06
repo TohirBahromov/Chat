@@ -12,19 +12,23 @@ export default function Chat() {
   const [selectedUserId, setSelectedUserId] = useState(null)
   const [newMsgText, setNewMsgText] = useState("")
   const [messages,setMessages] = useState([])
-  const [editing, setEditing] = useState(false)
   const {id,username,setId,setUsername} = useContext(UserContext)
   const bottomMessages = useRef()
 
   useEffect(()=>{
     connectToWs()
-  },[])
+  },[selectedUserId])
 
   function connectToWs(){
     const ws = new WebSocket('wss://chatagram-9jo5.onrender.com')
     setWebS(ws)
     ws.addEventListener("message", handleMessage)
-    ws.addEventListener("close", () => connectToWs())
+    ws.addEventListener("close", () => {
+      setTimeout(()=>{
+        console.log("Disconnected, Trying to reconnect. ");
+        connectToWs();
+      },1000 )
+    })
   }
 
   function onlinePeople(peopleArray){
@@ -60,17 +64,18 @@ export default function Chat() {
       text: newMsgText,
       file
     }))
-    setNewMsgText("")
-    setMessages(prev => ([...prev ,{
-      text: newMsgText,
-      sender:id, 
-      recipient: selectedUserId,
-      _id:Date.now()
-    }]))
     if(file){
       axios.get("/messages/" + selectedUserId).then(res => {
         setMessages(res.data)
       })
+    } else {
+      setNewMsgText("");
+      setMessages(prev => ([...prev ,{
+        text: newMsgText,
+        sender:id, 
+        recipient: selectedUserId,
+        _id:Date.now()
+      }]))
     }
   }
   function sendFile(e){
@@ -83,16 +88,11 @@ export default function Chat() {
       })
     }
   }
-  function changeEditing(){
-    setEditing(prev => {
-      return !prev
-    })
-  }
 
   useEffect(()=> {
     const div = bottomMessages.current;
     if(div){
-      div.scrollIntoView({behavior:"smooth"})
+      div.scrollIntoView({behavior:"smooth", block:"end"});
     }
   },[messages])
 
@@ -101,7 +101,7 @@ export default function Chat() {
       const offlinePeopleArr = res.data
         .filter(p => p._id !== id)
         .filter(p => !Object.keys(onlineUsers).includes(p._id));
-      const offlinePeople = {}
+      const offlinePeople = {};
       offlinePeopleArr.forEach(p => {
         offlinePeople[p._id] = p
       });
@@ -123,10 +123,6 @@ export default function Chat() {
   delete deleteOurUser[id]
 
   const messagesWithoutDupes = uniqBy(messages,"_id")
-  useEffect(()=>{
-    console.log(messages);
-  },[messages])
-
   return (
     <>
       <div className="flex h-screen">
