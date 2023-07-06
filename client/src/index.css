@@ -13,7 +13,6 @@
     bottom: 0;
     top: 0;
     transition: .5s;
-    left: -100%;
   }
   .chat-screen{
     width: 100%;
