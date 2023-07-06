@@ -12,13 +12,13 @@ export default function Chat() {
   const [selectedUserId, setSelectedUserId] = useState(null)
   const [newMsgText, setNewMsgText] = useState("")
   const [messages,setMessages] = useState([])
+  const [showMenu, setShowMenu] = useState(false)
   const {id,username,setId,setUsername} = useContext(UserContext)
   const bottomMessages = useRef()
 
   useEffect(()=>{
     connectToWs()
   },[selectedUserId])
-
   function connectToWs(){
     const ws = new WebSocket('wss://chatagram-9jo5.onrender.com')
     setWebS(ws)
@@ -30,7 +30,6 @@ export default function Chat() {
       },1000 )
     })
   }
-
   function onlinePeople(peopleArray){
     const people = {}
     peopleArray.forEach(({userId, username}) => {
@@ -38,7 +37,6 @@ export default function Chat() {
     });
     setOnlineUsers(people)
   }
-
   function handleMessage(e){
     const messageData = JSON.parse(e.data)
     if("online" in messageData){
@@ -49,7 +47,6 @@ export default function Chat() {
       }
     }
   }
-
   function logout(){
     axios.post("/logout").then(()=>{
       setWebS(null)
@@ -88,7 +85,11 @@ export default function Chat() {
       })
     }
   }
-
+  function ShowMenu(){
+    setShowMenu(prev => {
+      return !prev
+    })
+  }
   useEffect(()=> {
     const div = bottomMessages.current;
     if(div){
@@ -116,6 +117,7 @@ export default function Chat() {
       })
     }
   },[selectedUserId])
+  console.log(selectedUserId);
 
 
 
@@ -125,8 +127,8 @@ export default function Chat() {
   const messagesWithoutDupes = uniqBy(messages,"_id")
   return (
     <>
-      <div className="flex h-screen">
-        <div className="bg-white w-1/3 flex flex-col">
+      <div className="flex h-screen relative">
+        <div className={"contacts bg-white w-1/3 flex flex-col " + (ShowMenu ? "left-0" : "")}>
           <div className="logo">
             <Logo />
           </div>
@@ -182,7 +184,15 @@ export default function Chat() {
             </button>
           </div>
         </div>
-        <div className="bg-blue-50 w-2/3 p-2 flex flex-col">
+        <div className="chat-screen bg-blue-50 w-2/3 p-2 flex flex-col">
+          <div className="mobile-navbar justify-between p-4 bg-white text-blue-500 hidden">
+            <Logo />
+            <div onClick={ShowMenu}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
+            </div>
+          </div>
           <div className="flex-grow">
             {!selectedUserId &&
             (

@@ -5,3 +5,21 @@
 .scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+@media (max-width:640px) {
+  .contacts{
+    display: none;
+    width: 50%;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    transition: .5s;
+    left: -100%;
+  }
+  .chat-screen{
+    width: 100%;
+  }
+  .mobile-navbar{
+    display: flex;
+  }
+}
