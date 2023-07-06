@@ -195,9 +195,8 @@ wss.on("connection",(ws,req)=>{
           text,
           sender: ws.userId,
           recipient,
+          file: file ? filename : null,
           _id:messageDoc._id,
-          time: messageDoc.createdAt.getHours(),
-          file: file ? filename : null
         })))
     }
   });
