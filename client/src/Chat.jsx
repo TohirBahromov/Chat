@@ -128,7 +128,7 @@ export default function Chat() {
   return (
     <>
       <div className="flex h-screen relative">
-        <div className={"contacts bg-white w-1/3 flex flex-col " + (ShowMenu ? "left-0" : "")}>
+        <div className={"contacts bg-white w-1/3 flex flex-col " + (showMenu ? "left-0" : "")}>
           <div className="logo">
             <Logo />
           </div>
@@ -184,66 +184,74 @@ export default function Chat() {
             </button>
           </div>
         </div>
-        <div className="chat-screen bg-blue-50 w-2/3 p-2 flex flex-col">
-          <div className="mobile-navbar justify-between p-4 bg-white text-blue-500 hidden">
-            <Logo />
+        <div className="mobile flex flex-col">
+          <div className="mobile-navbar items-center justify-between p-4 bg-white text-blue-500 hidden">
+            <div className="text-blue-500 font-bold flex items-center gap-2 p-2">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+              <path d="M4.913 2.658c2.075-.27 4.19-.408 6.337-.408 2.147 0 4.262.139 6.337.408 1.922.25 3.291 1.861 3.405 3.727a4.403 4.403 0 00-1.032-.211 50.89 50.89 0 00-8.42 0c-2.358.196-4.04 2.19-4.04 4.434v4.286a4.47 4.47 0 002.433 3.984L7.28 21.53A.75.75 0 016 21v-4.03a48.527 48.527 0 01-1.087-.128C2.905 16.58 1.5 14.833 1.5 12.862V6.638c0-1.97 1.405-3.718 3.413-3.979z" />
+              <path d="M15.75 7.5c-1.376 0-2.739.057-4.086.169C10.124 7.797 9 9.103 9 10.609v4.285c0 1.507 1.128 2.814 2.67 2.94 1.243.102 2.5.157 3.768.165l2.782 2.781a.75.75 0 001.28-.53v-2.39l.33-.026c1.542-.125 2.67-1.433 2.67-2.94v-4.286c0-1.505-1.125-2.811-2.664-2.94A49.392 49.392 0 0015.75 7.5z" />
+              </svg>
+              _bakhramovvv__
+            </div>
             <div onClick={ShowMenu}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
               </svg>
             </div>
           </div>
-          <div className="flex-grow">
-            {!selectedUserId &&
-            (
-              <div className="h-full flex items-center justify-center">
-                <div className="text-gray-400">select a user</div>
-              </div>
-            )}
-            {!!selectedUserId && (
-              <div className="relative h-full">
-                <div className="overflow-y-scroll scrollbar absolute top-0 left-0 right-0 bottom-2" >
-                  {messagesWithoutDupes.map(message => (
-                    <div key={message._id} className={"" + message.sender === id ? "text-right" : "text-left"}>
-                      <div className={"msg p-2 my-2 rounded-md text-left inline-block relative " + (message.sender === id ? "bg-blue-500 text-white" : "bg-white text-gray-500")}>
-                        {message.text}
-                        {message.file && (
-                          <div>
-                            <a target="_blank" className="underline flex items-center gap-1" href={axios.defaults.baseURL + "/uploads/" + message.file}>
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13" />
-                              </svg>
-                              {message.file}
-                            </a>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                  <div ref={bottomMessages}></div>
+          <div className="chat-screen bg-blue-50 w-2/3 p-2 flex flex-col flex-grow">
+            <div className="flex-grow">
+              {!selectedUserId &&
+              (
+                <div className="h-full flex items-center justify-center">
+                  <div className="text-gray-400">select a user</div>
                 </div>
-              </div>
+              )}
+              {!!selectedUserId && (
+                <div className="relative h-full">
+                  <div className="overflow-y-scroll scrollbar absolute top-0 left-0 right-0 bottom-2" >
+                    {messagesWithoutDupes.map(message => (
+                      <div key={message._id} className={"" + message.sender === id ? "text-right" : "text-left"}>
+                        <div className={"msg p-2 my-2 rounded-md text-left inline-block relative " + (message.sender === id ? "bg-blue-500 text-white" : "bg-white text-gray-500")}>
+                          {message.text}
+                          {message.file && (
+                            <div>
+                              <a target="_blank" className="underline flex items-center gap-1" href={axios.defaults.baseURL + "/uploads/" + message.file}>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13" />
+                                </svg>
+                                {message.file}
+                              </a>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                    <div ref={bottomMessages}></div>
+                  </div>
+                </div>
+              )}
+            </div>
+            {!!selectedUserId && (
+              <form className="flex gap-2" onSubmit={sendMessage}>
+                <input type="text" placeholder="Type your message here" 
+                      value={newMsgText}
+                      onChange={ev => setNewMsgText(ev.target.value)}
+                      className="bg-white border p-2 flex-grow rounded-sm outline-none" />
+                <label className="bg-blue-200 p-2 text-gray-600 cursor-pointer">
+                  <input type="file" className="hidden" onChange={sendFile} />
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13" />
+                  </svg>
+                </label>
+                <button type="submit" className="bg-blue-500 p-2 text-white rounded-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                  </svg>
+                </button>
+              </form>
             )}
           </div>
-          {!!selectedUserId && (
-            <form className="flex gap-2" onSubmit={sendMessage}>
-              <input type="text" placeholder="Type your message here" 
-                    value={newMsgText}
-                    onChange={ev => setNewMsgText(ev.target.value)}
-                    className="bg-white border p-2 flex-grow rounded-sm outline-none" />
-              <label className="bg-blue-200 p-2 text-gray-600 cursor-pointer">
-                <input type="file" className="hidden" onChange={sendFile} />
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13" />
-                </svg>
-              </label>
-              <button type="submit" className="bg-blue-500 p-2 text-white rounded-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                </svg>
-              </button>
-            </form>
-          )}
         </div>
       </div>
     </>
