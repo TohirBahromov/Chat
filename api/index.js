@@ -123,7 +123,7 @@ app.post("/register", async (req,res)=>{
 
 cookieParser()
 
-const server = app.listen("https://chatagram-9jo5.onrender.com")
+const server = app.listen(4040)
 
 const wss = new WebSocketServer({server});
 wss.on("connection",(ws,req)=>{
