@@ -33,7 +33,13 @@ export default function Register() {
 
   return (
     <>
-      <div className='bg-blue-50 h-screen flex items-center'>
+      <div className='bg-blue-50 h-screen flex items-center relative'>
+        <div className="choose-language">
+          <fieldset>
+            <option value="eng">English</option>
+            <option value="uzb">Uzbek</option>
+          </fieldset>
+        </div>
         <form className='w-64 mx-auto' onSubmit={handleSubmit}>
           <input value={username} onChange={(ev)=>{setUsername(ev.target.value)}} type="text" placeholder='username' className='block outline-none p-3 mb-2 w-full rounded-sm border' />
           <input value={password} onChange={(ev)=>{setPassword(ev.target.value)}} type="password" placeholder='password' className='block outline-none p-3 mb-2 w-full rounded-sm border' />
