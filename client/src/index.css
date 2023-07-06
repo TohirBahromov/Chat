@@ -8,7 +8,6 @@
 
 @media (max-width:640px) {
   .contacts{
-    display: none;
     width: 50%;
     position: absolute;
     bottom: 0;
