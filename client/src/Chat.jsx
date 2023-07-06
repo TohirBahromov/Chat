@@ -159,7 +159,10 @@ export default function Chat() {
             <div className="offline-users mb-4 py-3 border-b-2 border-t-2">
               <div className="px-2 font-bold mb-4 text-gray-500 border-b pb-2 mx-4">Offline users</div>
               {Object.keys(offlineUsers).map(userId => (
-                <div key={userId} onClick={()=> setSelectedUserId(userId)} 
+                <div key={userId} onClick={()=> {
+                  setSelectedUserId(userId),
+                  ShowMenu()
+                }} 
                 className={"border-b border-gray-100 flex items-center gap-2 cursor-pointer " + (userId === selectedUserId ? "bg-blue-50" : "")}>
                   {userId === selectedUserId && (
                     <div className="w-1 h-12 bg-blue-500 rounded-r-md"></div>
