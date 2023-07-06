@@ -93,6 +93,8 @@ app.post("/login", async (req,res) => {
           username
         })
       })
+    }else{
+      res.json({err : "Password is incorrect"})
     }
   }else{
     res.json({err : "User doesn't exist"})
