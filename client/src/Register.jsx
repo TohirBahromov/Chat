@@ -34,10 +34,12 @@ export default function Register() {
   return (
     <>
       <div className='bg-blue-50 h-screen flex items-center relative'>
-        <div className="choose-language">
+        <div className="choose-language absolute top-8 right-8">
           <fieldset>
-            <option value="eng">English</option>
-            <option value="uzb">Uzbek</option>
+            <select>
+              <option value="eng">English</option>
+              <option value="uzb">Uzbek</option>
+            </select>
           </fieldset>
         </div>
         <form className='w-64 mx-auto' onSubmit={handleSubmit}>
