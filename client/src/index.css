@@ -8,11 +8,12 @@
 
 @media (max-width:640px) {
   .contacts{
-    width: 50%;
+    width: 90%;
     position: absolute;
     bottom: 0;
     top: 0;
     transition: .5s;
+    z-index: 10;
   }
   .chat-screen{
     width: 100%;
