@@ -19,16 +19,12 @@ const Salt = bcrypt.genSaltSync(10)
 
 app.use(cors({
   credentials:true,
-  origin:"http://127.0.0.1:5173"
+  origin:"http://chatagramm.netlify.app"
 }))
 app.use("/uploads",express.static(__dirname + "/uploads"))
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:5173');
-//   next();
-// });
 
 async function getUserDataFromRequest(req){
   return new Promise((resolve,reject) => {
@@ -119,7 +115,7 @@ app.post("/register", async (req,res)=>{
 
 cookieParser()
 
-const server = app.listen(4040)
+const server = app.listen("https://chatagram-9jo5.onrender.com")
 
 const wss = new WebSocketServer({server});
 wss.on("connection",(ws,req)=>{
