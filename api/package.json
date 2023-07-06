@@ -7,6 +7,9 @@
     "start": "nodemon index.js",
     "build" : "npm i"
   },
+  "engines": {
+    "node": ">=14.20.1"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
