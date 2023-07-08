@@ -5,10 +5,10 @@ import axios from "axios"
 export default function Register() {
   const [username,setUsername] = useState("");
   const [password,setPassword] = useState("");
-  const [registerError,setRegisterError] = useState("")
-  const [loginError, setLoginError] = useState("")
+  const [registerError,setRegisterError] = useState(null)
+  const [loginError, setLoginError] = useState(null)
   const [isLogOrReg, setIsLogOrReg] = useState("register")
-  const {setUsername: setLoggedInUsername,setId, setUzbek, uzbek} = useContext(UserContext);
+  const {setUsername: setLoggedInUsername,setId} = useContext(UserContext);
 
   function ChangePage(){
     setIsLogOrReg(isLogOrReg === "register" ? "login" : "register")
@@ -24,9 +24,15 @@ export default function Register() {
         username,
         password
       })
-      setLoggedInUsername(data.username)
-      setId(data.id)
-      setLoginError(data.err)
+      if(data.username){
+        setLoggedInUsername(data.username)
+      }
+      if(data.id){
+        setId(data.id)
+      }
+      if(data.err){
+        setLoginError(data.err)
+      }
     }
   } 
 
@@ -34,14 +40,6 @@ export default function Register() {
   return (
     <>
       <div className='bg-blue-50 h-screen flex items-center relative'>
-        <div className="choose-language absolute top-8 right-8">
-          <fieldset>
-            <select className='p-2'>
-              <option onChange={() => setUzbek(false)} value="eng">English</option>
-              <option onChange={() => setUzbek(true)} value="uzb">Uzbek</option>
-            </select>
-          </fieldset>
-        </div>
         <form className='w-64 mx-auto' onSubmit={handleSubmit}>
           <input value={username} onChange={(ev)=>{setUsername(ev.target.value)}} type="text" placeholder='username' className='block outline-none p-3 mb-2 w-full rounded-sm border' />
           <input value={password} onChange={(ev)=>{setPassword(ev.target.value)}} type="password" placeholder='password' className='block outline-none p-3 mb-2 w-full rounded-sm border' />
@@ -49,16 +47,16 @@ export default function Register() {
           <div className='text-center mt-2'>
             {isLogOrReg === "register" && (
               <div>
-                {uzbek ? "Saytga a'zomisiz?" : "Already a member?"} 
-                <button className='ml-1 text-blue-600' onClick={ChangePage}>{uzbek ? "Akkauntingizga kiring" : "Login here"}</button>
-                <h3 className='text-red-500'>{registerError}</h3>
+                Already a member?
+                <button className='ml-1 text-blue-600' onClick={ChangePage}>Login here</button>
+                {registerError && <h3 className='text-red-500'>{registerError}</h3>}
               </div>
             )}
             {isLogOrReg === "login" && (
               <div>
-                {uzbek ? "Akkauntingiz yo'qmi?" : "Don't have an account?"} 
-                <button className='ml-1 text-blue-600' onClick={ChangePage}>{uzbek ? "Ro'yxatdan o'ting" : "Sign in"}</button>
-                <h3 className='text-red-500'>{loginError}</h3>
+                Don't have an account? 
+                <button className='ml-1 text-blue-600' onClick={ChangePage}>Sign in</button>
+                {loginError && <h3 className='text-red-500'>{loginError}</h3>}
               </div>
             )}
           </div>
