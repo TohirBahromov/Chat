@@ -107,7 +107,7 @@ app.post("/register", async (req,res)=>{
   const {username,password} = req.body
   try{
     if(username === User.find({username:username})){
-      res.json({err:"User already exists"})
+      res.json({erreg:"User already exists"})
     }
     const hashedPassword = bcrypt.hashSync(password, Salt)
     const newUser = await User.create({
