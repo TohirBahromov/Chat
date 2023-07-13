@@ -109,20 +109,19 @@ app.post("/register", async (req,res)=>{
     const existingUser = User.findOne({username:username})
     if(existingUser){
       res.json({erreg:"User already exists"})
-    }else{
-      const hashedPassword = bcrypt.hashSync(password, Salt)
-      const newUser = await User.create({
-        username:username,
-        password:hashedPassword
-      })
-      jwt.sign({userId: newUser._id,username},jwtSecret, {}, (err,token)=>{
-      if(err) throw err
-      res.cookie("token", token, {sameSite:"none", secure:true}).status(201).json({
-        id:newUser._id,
-        username
-      });
-      })
-    }
+    };
+    const hashedPassword = bcrypt.hashSync(password, Salt)
+    const newUser = await User.create({
+      username:username,
+      password:hashedPassword
+    })
+    jwt.sign({userId: newUser._id,username},jwtSecret, {}, (err,token)=>{
+    if(err) throw err
+    res.cookie("token", token, {sameSite:"none", secure:true}).status(201).json({
+      id:newUser._id,
+      username
+    });
+    })
   } catch(err){
     if(err) throw err
   }
