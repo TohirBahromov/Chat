@@ -106,7 +106,7 @@ app.post("/logout", (req,res)=>{
 app.post("/register", async (req,res)=>{
   const {username,password} = req.body
   try{
-    const existingUser = User.findOne({username:username})
+    const existingUser = await User.findOne({username:username})
     if(existingUser){
       res.json({erreg:"User already exists"})
     };
