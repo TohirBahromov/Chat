@@ -33,6 +33,9 @@ export default function Register() {
       if(data.err){
         setLoginError(data.err)
       }
+      if(data.erreg){
+        setRegisterError(data.erreg)
+      }
     }
   } 
 
